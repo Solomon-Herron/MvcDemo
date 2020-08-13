@@ -1,0 +1,45 @@
+How To Redirect from JSP to a Servlet:
+
+You can make use of the method:  response.sendRedirect( <thePageUrl> )
+Here's a quick example. The file test-redirect.jsp will send a redirect to the HelloWorldServlet. The HelloWorldServlet has a URL mapping of "/hello".
+
+Here's the code for the JSP
+
+        File: test-redirect.jsp
+
+        <%
+            response.sendRedirect(request.getContextPath() + "/hello");
+        %>
+
+Here's the code for the Servlet. Make note of the URL mapping "/hello"
+
+        File: HelloWorldServlet.java
+
+        package com.luv2code.demo;
+
+        import java.io.IOException;
+        import java.io.PrintWriter;
+
+        import javax.servlet.ServletException;
+        import javax.servlet.annotation.WebServlet;
+        import javax.servlet.http.HttpServlet;
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpServletResponse;
+
+        @WebServlet("/hello")
+        public class HelloWorldServlet extends HttpServlet {
+            private static final long serialVersionUID = 1L;
+
+            protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
+
+                out.println("Hello world: " + new java.util.Date());
+            }
+
+        }
+
+---
+
+When you run the JSP file, test-redirect.jsp.  It will automatically redirect to the servlet.
